@@ -14,6 +14,9 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-material-textfield": "^0.12.0",
     "react-navigation": "^2.18.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   }
 }

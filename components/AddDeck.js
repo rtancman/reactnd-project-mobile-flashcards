@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native'
+import React, { Component } from 'react'
+import { View } from 'react-native'
+import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 import { PressBtn, Grid, Title, CustomTextField } from '../utils/layout'
-import { createDeck } from '../utils/api'
+import { saveDeckTitleFetch } from '../actions'
 
 class AddDeck extends Component {
   state = {
@@ -11,17 +13,19 @@ class AddDeck extends Component {
 
   onSubmit() {
     const { title } = this.state
-
     if( title === '' ){
       this.setState({ errorTitle: 'this field is required'})
     }else{
-      createDeck(title)
-      this.setState({ title: '', errorTitle: ''})
+      this.props.dispatch(saveDeckTitleFetch(title))
+        .then((deck) => {
+          this.setState({ title: '', errorTitle: ''})
+          this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Home' }))
+        })
     }
   }
 
   render() {
-    const { title, errorTitle } = this.state;
+    const { title, errorTitle } = this.state
 
     return (
       <View style={Grid.container}>
@@ -34,8 +38,8 @@ class AddDeck extends Component {
         />
         <PressBtn onPress={() => this.onSubmit()} label='SAVE' />
       </View>
-    );
+    )
   }
 }
 
-export default AddDeck
+export default connect()(AddDeck)

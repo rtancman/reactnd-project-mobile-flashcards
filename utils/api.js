@@ -3,18 +3,13 @@ import uuidv4 from 'uuid/v4'
 
 const FLASHCARDS_DECKS_KEY = 'FLASHCARDS_DECKS_KEY'
 
-
-const initialQuestions = {
-  question: '',
-  answer: ''
-}
-
 const initialDecks =  {
+  id: '',
   title: '',
   questions: []
 }
 
-export function listDecks () {
+export const getDecks = () => {
   return AsyncStorage.getItem(FLASHCARDS_DECKS_KEY)
     .then((results) => {
       return results === null
@@ -23,18 +18,52 @@ export function listDecks () {
     })
 }
 
-export function createDeck (title) {
-  return AsyncStorage.mergeItem(FLASHCARDS_DECKS_KEY, JSON.stringify({
-    [uuidv4()]: { ...initialDecks, title: title }
-  }))
+export const getDeck = (id) => {
+  return AsyncStorage.getItem(FLASHCARDS_DECKS_KEY)
+    .then((results) => {
+      if( results === null ) return {}
+      
+      const decks = JSON.parse(results)
+      
+      if (!decks.hasOwnProperty(id)) return {}
+
+      return decks[id]
+    })
 }
 
-export function removeDeck (key) {
+export const saveDeckTitle = (deck) => {
+  return AsyncStorage.mergeItem(FLASHCARDS_DECKS_KEY, JSON.stringify(deck))
+}
+
+export const addCardToDeck = (id, card) => {
+  getDeck(id)
+    .then((deck) => {
+      return AsyncStorage.mergeItem(FLASHCARDS_DECKS_KEY, JSON.stringify({
+        [id]: { 
+          ...deck, 
+          questions: [
+            ...deck.questions, 
+            { 
+              id: uuidv4(), 
+              question: card.question,
+              answer: card.answer,
+            } 
+          ] 
+        }
+      }))
+    })
+}
+
+export function removeDeck (id) {
   return AsyncStorage.getItem(FLASHCARDS_DECKS_KEY)
     .then((results) => {
       const data = JSON.parse(results)
-      data[key] = undefined
-      delete data[key]
+      data[id] = undefined
+      delete data[id]
       AsyncStorage.setItem(FLASHCARDS_DECKS_KEY, JSON.stringify(data))
     })
+}
+
+export function clearAllDecks () {
+  return AsyncStorage.setItem(FLASHCARDS_DECKS_KEY, '')
 }

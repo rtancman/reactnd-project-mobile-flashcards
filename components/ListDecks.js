@@ -1,29 +1,52 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native'
-import { listDecks } from '../utils/api'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { View, Text, StyleSheet } from 'react-native'
+import { decksFetchData } from '../actions'
+import { gray } from '../utils/colors'
 
 class ListDecks extends Component {
-  state = {
-    decks: {}
-  }
 
-  componentDidMount () {
-    listDecks()
-      .then((decks) => this.setState({decks}))
+  componentDidMount() {
+    this.props.dispatch(decksFetchData())
   }
 
   render() {
-    const { decks } = this.state
-
-    console.log(decks)
+    const { decks } = this.props
 
     return (
       <View style={{flex: 1}}>
         <Text>List Decks</Text>
-        <Text>{JSON.stringify(decks)}</Text>
+        {Object.keys(decks).map((deckId) => {
+          const deck = decks[deckId]
+          return (
+            <View style={styles.deckItem} key={deckId}>
+              <View>
+                <Text style={{fontSize: 20}}>
+                  {deck.title}
+                </Text>
+                <Text style={{fontSize: 16, color: gray}}>
+                  {deck.questions.length}
+                </Text>
+              </View>
+            </View>
+          )
+        })}
       </View>
-    );
+    )
   }
 }
 
-export default ListDecks
+const styles = StyleSheet.create({
+  deckItem: {
+    flexDirection: 'row',
+    marginTop: 12
+  },
+})
+
+const mapStateToProps = ({decks}) => { 
+  return {
+    decks
+  } 
+}
+
+export default connect(mapStateToProps)(ListDecks)

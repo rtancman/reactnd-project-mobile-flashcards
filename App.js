@@ -1,15 +1,16 @@
-import React from 'react';
+import React from 'react'
+import { Provider } from 'react-redux'
 import { View, Platform, StatusBar } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
+import configureStore from './store'
 import { slategray, white, silver, snow } from './utils/colors'
 import AddDeck from './components/AddDeck'
 import ListDecks from './components/ListDecks'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
-
 
 function MobileFlashcardsBar ({backgroundColor, ...props}) {
   return (
@@ -76,13 +77,17 @@ const MainNavigator = createStackNavigator({
   }
 })
 
+const store = configureStore()
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-        <MobileFlashcardsBar backgroundColor={snow} barStyle="light-content" />
-        <MainNavigator />
-      </View>
-    );
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <MobileFlashcardsBar backgroundColor={snow} barStyle="light-content" />
+          <MainNavigator />
+        </View>
+      </Provider>
+    )
   }
 }
