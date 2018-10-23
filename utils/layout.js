@@ -6,7 +6,7 @@ import { slategray, white, silver } from './colors'
 export const PressBtn = ({ onPress, label = 'SUBMIT' }) => {
   return (
     <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn}
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn]}
       onPress={onPress}>
         <Text style={styles.PressBtnText}>{label}</Text>
     </TouchableOpacity>
@@ -48,17 +48,18 @@ export const Grid  = StyleSheet.create({
 })
 
 const styles = StyleSheet.create({
-  iosPressBtn: {
-    backgroundColor: slategray,
+  pressBtn: {
     padding: 10,
+    backgroundColor: slategray,
+    marginBottom: 20,
+  },
+  iosPressBtn: {
     borderRadius: 7,
     height: 45,
     marginLeft: 40,
     marginRight: 40,
   },
   AndroidPressBtn: {
-    backgroundColor: slategray,
-    padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,

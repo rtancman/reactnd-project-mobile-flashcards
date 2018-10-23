@@ -5,7 +5,7 @@ class Quiz extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <Text>Add Card</Text>
+        <Text>Quiz</Text>
       </View>
     );
   }
