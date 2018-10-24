@@ -1,7 +1,9 @@
+import { getDecks, saveDeckTitle, addCardToDeck } from '../utils/api'
+import uuidv4 from 'uuid/v4'
+
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECKS = 'ADD_DECKS'
-import { getDecks, saveDeckTitle } from '../utils/api'
-import uuidv4 from 'uuid/v4'
+export const ADD_CARD = 'ADD_CARD'
 
 const initialDecks =  {
   id: '',
@@ -20,6 +22,14 @@ export function addDeck (deck) {
   return {
     type: ADD_DECKS,
     deck,
+  }
+}
+
+export function addCard (deckId, card) {
+  return {
+    type: ADD_CARD,
+    deckId,
+    card,
   }
 }
 
@@ -45,6 +55,23 @@ export function saveDeckTitleFetch(title) {
         dispatch(addDeck(newDeck))
         return new Promise(function(resolve) {
           resolve(newDeck);
+        })
+      })
+  }
+}
+
+export function addCardToDeckFetch(deckId, card) {
+  return dispatch => {
+    const newCard = {
+      id: uuidv4(),
+      question: card.question,
+      answer: card.answer,
+    }
+    return addCardToDeck(deckId, newCard)
+      .then(data => {
+        dispatch(addCard(deckId, newCard))
+        return new Promise(function(resolve) {
+          resolve(newCard);
         })
       })
   }

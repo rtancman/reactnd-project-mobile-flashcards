@@ -80,6 +80,5 @@ const styles = StyleSheet.create({
   Title: {
     color: slategray,
     fontSize: 28,
-    textAlign: 'center',
   }
 })

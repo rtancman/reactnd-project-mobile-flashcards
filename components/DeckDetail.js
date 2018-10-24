@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { View } from 'react-native'
-import { PressBtn, Grid } from '../utils/layout'
+import { PressBtn, Grid, Title } from '../utils/layout'
 
 class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -11,16 +12,24 @@ class DeckDetail extends Component {
   }
 
   render() {
-    const { navigation } = this.props
-    const { title, deckId } = navigation.state.params
+    const { navigation, deck } = this.props
+    const { deckId } = navigation.state.params
 
     return (
       <View style={Grid.container}>
-        <PressBtn onPress={() => navigation.navigate('AddCard', { title, deckId } )} label='ADD CARD' />
-        <PressBtn onPress={() => navigation.navigate('Quiz', { title, deckId } )} label='START QUIZ' />
+        <Title>Total Cards {deck.questions.length}</Title>
+        <PressBtn onPress={() => navigation.navigate('AddCard', { title: deck.title, deckId } )} label='ADD CARD' />
+        <PressBtn onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} label='START QUIZ' />
       </View>
     );
   }
 }
 
-export default DeckDetail
+const mapStateToProps = ({decks}, {navigation}) => {
+  const { deckId } = navigation.state.params
+  return {
+    deck: decks[deckId],
+  } 
+}
+
+export default connect(mapStateToProps)(DeckDetail)

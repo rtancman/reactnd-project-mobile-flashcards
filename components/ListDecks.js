@@ -22,12 +22,7 @@ class ListDecks extends Component {
             <TouchableOpacity
               key={deckId}
               onPress={() => navigation.navigate(
-                'DeckDetail',
-                { 
-                  title: deck.title,
-                  questions: deck.questions.length,
-                  deckId,
-                }
+                'DeckDetail', { title: deck.title, deckId, }
               )}
             >
               <View style={styles.deckItem}>
