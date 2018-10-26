@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput } from 'react-native'
 import { TextField } from 'react-native-material-textfield';
-import { slategray, white, silver } from './colors'
+import { slategray, white, silver, redBlood, green } from './colors'
 
 export const PressBtn = ({ onPress, label = 'SUBMIT' }) => {
   return (
@@ -9,6 +9,35 @@ export const PressBtn = ({ onPress, label = 'SUBMIT' }) => {
       style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn]}
       onPress={onPress}>
         <Text style={styles.PressBtnText}>{label}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const SuccessBtn = ({ onPress, label = 'Success' }) => {
+  return (
+    <TouchableOpacity
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.successBtn]}
+      onPress={onPress}>
+        <Text style={styles.PressBtnText}>{label}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const DangerBtn = ({ onPress, label = 'Danger' }) => {
+  return (
+    <TouchableOpacity
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.dangerBtn]}
+      onPress={onPress}>
+        <Text style={styles.PressBtnText}>{label}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const LinkBtn = ({ onPress, label = 'Link' }) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}>
+        <Text style={styles.LinkBtnText}>{label}</Text>
     </TouchableOpacity>
   )
 }
@@ -47,11 +76,27 @@ export const Grid  = StyleSheet.create({
   },
 })
 
+export const StepProgress = ({step = 0, total = 0}) => {
+  let percentage = '100%'
+  if ( step > 0 && total > 0 ) {
+    percentage = ((step/total) * 100).toFixed(2) + '%'
+  }
+  return (
+    <Text>{step}/{total} - {percentage}</Text>
+  )
+}
+
 const styles = StyleSheet.create({
   pressBtn: {
     padding: 10,
     backgroundColor: slategray,
     marginBottom: 20,
+  },
+  successBtn: {
+    backgroundColor: green,
+  },
+  dangerBtn: {
+    backgroundColor: redBlood,
   },
   iosPressBtn: {
     borderRadius: 7,
@@ -69,6 +114,11 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 22,
     textAlign: 'center',
+  },
+  LinkBtnText: {
+    color: '#007bff',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
   center: {
     flex: 1,
