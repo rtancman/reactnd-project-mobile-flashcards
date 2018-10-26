@@ -66,6 +66,7 @@ export function addCardToDeckFetch(deckId, card) {
       id: uuidv4(),
       question: card.question,
       answer: card.answer,
+      correct: card.correct,
     }
     return addCardToDeck(deckId, newCard)
       .then(data => {

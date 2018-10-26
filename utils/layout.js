@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch } from 'react-native'
 import { TextField } from 'react-native-material-textfield';
 import { slategray, white, silver, redBlood, green } from './colors'
 
@@ -63,6 +63,34 @@ export const Title = ({ children = 'Title' }) => {
   )
 }
 
+export const StepProgress = ({step = 0, total = 0}) => {
+  let percentage = '100%'
+  if ( step > 0 && total > 0 ) {
+    percentage = ((step/total) * 100).toFixed(2) + '%'
+  }
+  return (
+    <Text>{step}/{total} - {percentage}</Text>
+  )
+}
+
+export const CustomText = ({label}) => {
+  return (
+    <Text style={styles.Text}>{label}</Text>
+  )
+}
+
+export const CustomSwitch = ({label, value, onChange}) => {
+  return (
+    <View style={{flexDirection: 'row', marginBottom: 30, marginTop: 30}}>
+      <Text style={[styles.Text, {flex: 1}]}>{label}</Text>
+      <Switch style={{flex: 1}}
+        onValueChange={(value) => onChange(value)}
+        value={value}
+      />
+    </View>
+  )
+}
+
 export const Grid  = StyleSheet.create({
   container: {
     flex: 1,
@@ -75,16 +103,6 @@ export const Grid  = StyleSheet.create({
     alignItems: 'center',
   },
 })
-
-export const StepProgress = ({step = 0, total = 0}) => {
-  let percentage = '100%'
-  if ( step > 0 && total > 0 ) {
-    percentage = ((step/total) * 100).toFixed(2) + '%'
-  }
-  return (
-    <Text>{step}/{total} - {percentage}</Text>
-  )
-}
 
 const styles = StyleSheet.create({
   pressBtn: {
@@ -130,5 +148,9 @@ const styles = StyleSheet.create({
   Title: {
     color: slategray,
     fontSize: 28,
+  },
+  Text: {
+    color: slategray,
+    fontSize: 16,
   }
 })

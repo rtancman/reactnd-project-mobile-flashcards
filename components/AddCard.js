@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-import { PressBtn, Grid, Title, CustomTextField } from '../utils/layout'
+import { PressBtn, Grid, Title, CustomTextField, CustomSwitch } from '../utils/layout'
 import { addCardToDeckFetch } from '../actions'
 
 class AddCard extends Component {
@@ -18,10 +18,11 @@ class AddCard extends Component {
     errorQuestion: '',
     answer: '',
     errorAnswer: '',
+    correct: false,
   }
 
   onSubmit(deckId) {
-    const { question, answer } = this.state
+    const { question, answer, correct } = this.state
 
     if( question === '' && answer === '' ) {
       this.setState({
@@ -33,7 +34,7 @@ class AddCard extends Component {
     } else if( answer === '' ) {
       this.setState({ errorAnswer: 'this field is required'})
     } else {
-      this.props.dispatch(addCardToDeckFetch(deckId, {question, answer}))
+      this.props.dispatch(addCardToDeckFetch(deckId, {question, answer, correct}))
         .then((card) => {
           this.setState({ 
             question: '',
@@ -65,6 +66,11 @@ class AddCard extends Component {
           value={answer}
           error={errorAnswer}
           onChange={(answer) => this.setState({ answer })}
+        />
+        <CustomSwitch 
+          value={this.state.correct}
+          label='Is a correct answer?'
+          onChange={(value) => this.setState({ correct: value })}
         />
         <PressBtn onPress={() => this.onSubmit(deckId)} label='SAVE' />
       </View>
