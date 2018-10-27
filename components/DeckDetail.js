@@ -17,7 +17,7 @@ class DeckDetail extends Component {
 
     return (
       <View style={Grid.container}>
-        <Title>Total Cards {deck.questions.length}</Title>
+        <Title>Cards {deck.questions.length}</Title>
         <PressBtn onPress={() => navigation.navigate('AddCard', { title: deck.title, deckId } )} label='ADD CARD' />
         <PressBtn onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} label='START QUIZ' />
       </View>

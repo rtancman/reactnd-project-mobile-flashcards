@@ -64,7 +64,7 @@ export const Title = ({ children = 'Title' }) => {
 }
 
 export const StepProgress = ({step = 0, total = 0}) => {
-  let percentage = '100%'
+  let percentage = '0%'
   if ( step > 0 && total > 0 ) {
     percentage = ((step/total) * 100).toFixed(2) + '%'
   }
