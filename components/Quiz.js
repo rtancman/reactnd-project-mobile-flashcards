@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { SuccessBtn, DangerBtn, Grid, Title, StepProgress, LinkBtn } from '../utils/layout'
+import { clearLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -30,6 +31,7 @@ class Quiz extends Component {
     const { step } = this.state
 
     if ( (step+1) >= deck.questions.length ) {
+      clearLocalNotification()
       this.setState({
         showEndScreen: true
       })

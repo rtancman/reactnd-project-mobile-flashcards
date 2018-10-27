@@ -5,7 +5,8 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 import configureStore from './store'
-import { slategray, white, silver, snow } from './utils/colors'
+import { slategray, silver, snow } from './utils/colors'
+import { setLocalNotification } from './utils/helpers'
 import AddDeck from './components/AddDeck'
 import ListDecks from './components/ListDecks'
 import DeckDetail from './components/DeckDetail'
@@ -80,6 +81,10 @@ const MainNavigator = createStackNavigator({
 const store = configureStore()
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>
