@@ -190,7 +190,5 @@ export const theme = StyleSheet.create({
     padding:20,
     backgroundColor: white,
     borderRadius:10,
-    borderWidth: 1,
-    borderColor: slategray,
   },
 })

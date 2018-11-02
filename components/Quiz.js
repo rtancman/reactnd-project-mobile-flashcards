@@ -53,7 +53,7 @@ class Quiz extends Component {
       return (
         <View style={{flex:1}}>
           <StepProgress step={step+1} total={deck.questions.length} />
-          <View style={[theme.Box, styles.NoBorder]}>
+          <View style={[theme.Box]}>
             <Ionicons style={styles.TextCenter} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={60} color={green} />
             <Title customStyle={styles.TextCenter}>Congratulations!</Title>
             <SubTitle customStyle={styles.TextCenter}>Your score is {score}</SubTitle>
@@ -98,9 +98,6 @@ class Quiz extends Component {
 const styles = StyleSheet.create({
   TextCenter: {
     textAlign: 'center',
-  },
-  NoBorder: {
-    borderWidth: 0,
   },
 })
 
