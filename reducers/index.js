@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_DECKS, ADD_DECKS, ADD_CARD } from '../actions'
+import { RECEIVE_DECKS, ADD_DECKS, ADD_CARD, REMOVE_DECK } from '../actions'
 
 
 const decks = (state = {}, action) => {
@@ -24,6 +24,13 @@ const decks = (state = {}, action) => {
             action.card,
           ]
         }
+      }
+    case REMOVE_DECK:
+      const decks = { ...state }
+      decks[action.deckId] = undefined
+      delete decks[action.deckId]
+      return {
+        ...decks,
       }
     default :
       return state

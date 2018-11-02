@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, Platform } from 'react-native'
-import { PressBtn, Grid, Title, SubTitle } from '../utils/layout'
+import { View, Platform, Alert, ActivityIndicator } from 'react-native'
+import { NavigationActions } from 'react-navigation'
+import { PressBtn, DangerBtn, Grid, Title, SubTitle } from '../utils/layout'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
-import { white } from '../utils/colors'
+import { white, slategray } from '../utils/colors'
+import { removeDeckFetch } from '../actions'
 
 class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -13,7 +15,37 @@ class DeckDetail extends Component {
     }
   }
 
+  state = {
+    loading: false,
+  }
+
+  removeDeck() {
+    this.setState({ loading: true})
+    this.props.dispatch(removeDeckFetch(this.props.deck.id))
+    .then((deck) => {
+      this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Home' }))
+    })
+  }
+
+  removeAction() {
+    Alert.alert(
+      'Remove deck',
+      `Do you want to remove deck ${this.props.deck.title}?`,
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'Remove Deck', onPress: () => this.removeDeck()},
+      ],
+      { cancelable: false }
+    )    
+  }
+
   render() {
+    const { loading } = this.state
+
+    if ( loading ){
+      return <ActivityIndicator size="large" color={slategray} />
+    }
+
     const { navigation, deck } = this.props
     const { deckId } = navigation.state.params
     const questionLength = deck.questions.length
@@ -33,6 +65,11 @@ class DeckDetail extends Component {
             icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
           />
         )}
+        <DangerBtn 
+          onPress={() => this.removeAction() } 
+          label='REMOVE DECK'
+          icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} size={20} color={white} /> }
+        />
       </View>
     );
   }

@@ -69,13 +69,13 @@ export const addCardToDeck = (deckId, card) => {
     })
 }
 
-export function removeDeck (id) {
+export function removeDeckById (id) {
   return AsyncStorage.getItem(FLASHCARDS_DECKS_KEY)
     .then((results) => {
       const data = JSON.parse(results)
       data[id] = undefined
       delete data[id]
-      AsyncStorage.setItem(FLASHCARDS_DECKS_KEY, JSON.stringify(data))
+      return AsyncStorage.setItem(FLASHCARDS_DECKS_KEY, JSON.stringify(data))
     })
 }
 
