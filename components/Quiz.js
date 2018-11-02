@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
-import { SuccessBtn, DangerBtn, Grid, Title, StepProgress, LinkBtn } from '../utils/layout'
+import { Ionicons } from '@expo/vector-icons'
+import { SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
 import { clearLocalNotification } from '../utils/helpers'
+import { green, white } from '../utils/colors'
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -53,42 +55,58 @@ class Quiz extends Component {
 
     if ( showEndScreen ) {
       return (
-        <View style={Grid.container}>
+        <View style={{flex:1}}>
           <StepProgress step={step+1} total={deck.questions.length} />
-          <Title>Quiz finish!</Title>
-          <Text>Your score is {score}</Text>
+          <View style={[theme.Box, styles.NoBorder]}>
+            <Ionicons style={styles.TextCenter} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={60} color={green} />
+            <Title customStyle={styles.TextCenter}>Congratulations!</Title>
+            <SubTitle customStyle={styles.TextCenter}>Your score is {score}</SubTitle>
+          </View>
         </View>
       ) 
     }
 
     const card = deck.questions[step]
-    let answerContent = <LinkBtn label='Answer' onPress={() => this.setState({showAnswer: true})} />
+    let answerContent = <LinkBtn customStyle={styles.TextCenter} label='Answer' onPress={() => this.setState({showAnswer: true})} />
 
     if( showAnswer ) {
       answerContent = (
-        <View style={Grid.container}>
-          <Text>{card.answer}</Text>
+        <View>
+          <SubTitle customStyle={styles.TextCenter}>{card.answer}</SubTitle>
           <SuccessBtn 
             label='Correct'
-            onPress={() => this.choiceAnswer(true, card)} 
+            onPress={() => this.choiceAnswer(true, card)}
+            icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} size={20} color={white} /> }
           />
           <DangerBtn 
             label='Incorrect'
-            onPress={() => this.choiceAnswer(false, card)} 
+            onPress={() => this.choiceAnswer(false, card)}
+            icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} size={20} color={white} /> }
           />
         </View>
       )
     } 
 
     return (
-      <View style={Grid.container}>
+      <View style={{flex:1}}>
         <StepProgress step={step} total={deck.questions.length} />
-        <Title>{card.question}</Title>
-        { answerContent }
+        <View style={theme.Box}>
+          <Title customStyle={styles.TextCenter}>{card.question}</Title>
+          { answerContent }
+        </View>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  TextCenter: {
+    textAlign: 'center',
+  },
+  NoBorder: {
+    borderWidth: 0,
+  },
+})
 
 const mapStateToProps = ({decks}, {navigation}) => {
   const { deckId } = navigation.state.params

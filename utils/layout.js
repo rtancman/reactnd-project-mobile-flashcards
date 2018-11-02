@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch } from 'react-native'
 import { TextField } from 'react-native-material-textfield';
 import { slategray, white, silver, redBlood, green } from './colors'
@@ -13,31 +13,31 @@ export const PressBtn = ({ onPress, label = 'SUBMIT', icon = '' }) => {
   )
 }
 
-export const SuccessBtn = ({ onPress, label = 'Success' }) => {
+export const SuccessBtn = ({ onPress, label = 'SUCCESS', icon = '' }) => {
   return (
     <TouchableOpacity
       style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.successBtn]}
       onPress={onPress}>
-        <Text style={styles.PressBtnText}>{label}</Text>
+        <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
   )
 }
 
-export const DangerBtn = ({ onPress, label = 'Danger' }) => {
+export const DangerBtn = ({ onPress, label = 'DANGER', icon = '' }) => {
   return (
     <TouchableOpacity
       style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.dangerBtn]}
       onPress={onPress}>
-        <Text style={styles.PressBtnText}>{label}</Text>
+        <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
   )
 }
 
-export const LinkBtn = ({ onPress, label = 'Link' }) => {
+export const LinkBtn = ({ customStyle = {}, onPress, label = 'Link' }) => {
   return (
     <TouchableOpacity
       onPress={onPress}>
-        <Text style={styles.LinkBtnText}>{label}</Text>
+        <Text style={[styles.LinkBtnText, customStyle]}>{label}</Text>
     </TouchableOpacity>
   )
 }
@@ -74,7 +74,10 @@ export const StepProgress = ({step = 0, total = 0}) => {
     percentage = ((step/total) * 100).toFixed(2) + '%'
   }
   return (
-    <Text>{step}/{total} - {percentage}</Text>
+    <View style={[Grid.row, styles.ProgressBar]}>
+      <Text style={[{flex: 1}, styles.ProgressText, styles.TextLeft]}>{step}/{total}</Text>
+      <Text style={[{flex: 1}, styles.ProgressText, styles.TextRight]}>{percentage}</Text>
+    </View>
   )
 }
 
@@ -96,7 +99,7 @@ export const CustomSwitch = ({label, value, onChange}) => {
   )
 }
 
-export const Grid  = StyleSheet.create({
+export const Grid = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -104,7 +107,6 @@ export const Grid  = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    flex: 1,
     alignItems: 'center',
   },
 })
@@ -162,5 +164,33 @@ const styles = StyleSheet.create({
   Text: {
     color: slategray,
     fontSize: 16,
-  }
+  },
+  ProgressBar: {
+    backgroundColor: slategray,
+    padding: 12,
+    marginBottom: 20,
+  },
+  ProgressText: {
+    color: white,
+  },
+  TextCenter: {
+    textAlign: 'center',
+  },
+  TextLeft: {
+    textAlign: 'left',
+  },
+  TextRight: {
+    textAlign: 'right',
+  },
+})
+
+export const theme = StyleSheet.create({
+  Box: {
+    margin: 12,
+    padding:20,
+    backgroundColor: white,
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: slategray,
+  },
 })
