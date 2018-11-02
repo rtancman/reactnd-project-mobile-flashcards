@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View } from 'react-native'
-import { PressBtn, Grid, Title } from '../utils/layout'
+import { View, Platform } from 'react-native'
+import { PressBtn, Grid, Title, SubTitle } from '../utils/layout'
+import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
+import { white } from '../utils/colors'
 
 class DeckDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -16,10 +18,19 @@ class DeckDetail extends Component {
     const { deckId } = navigation.state.params
 
     return (
-      <View style={Grid.container}>
-        <Title>Cards {deck.questions.length}</Title>
-        <PressBtn onPress={() => navigation.navigate('AddCard', { title: deck.title, deckId } )} label='ADD CARD' />
-        <PressBtn onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} label='START QUIZ' />
+      <View style={[Grid.container]}>
+        <Title>{deck.title}</Title>
+        <SubTitle>{deck.questions.length} Cards</SubTitle>
+        <PressBtn 
+          onPress={() => navigation.navigate('AddCard', { title: deck.title, deckId } )} 
+          label='ADD CARD'
+          icon={Platform.OS === 'ios' ? <Ionicons name='ios-square-outline' size={20} color={white} /> : <MaterialCommunityIcons name='cards-outline' size={20} color={white} /> }
+        />
+        <PressBtn 
+          onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} 
+          label='START QUIZ' 
+          icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
+        />
       </View>
     );
   }

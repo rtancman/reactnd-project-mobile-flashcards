@@ -3,28 +3,24 @@ import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { Grid, Title } from '../utils/layout'
 import { decksFetchData } from '../actions'
-import { gray } from '../utils/colors'
+import { gray, white, slategray } from '../utils/colors'
 
 const DeckRender = ({id, title, questions, navigation}) => {
   return (
-    <View style={Grid.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(
-          'DeckDetail', { deckId: id, title,  }
-        )}
-      >
-        <View style={styles.deckItem}>
-          <View>
-            <Text style={{fontSize: 20}}>
-              {title}
-            </Text>
-            <Text style={{fontSize: 16, color: gray}}>
-              {questions.length}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={[styles.deckItem]}
+      onPress={() => navigation.navigate(
+        'DeckDetail', { deckId: id, title,  }
+      )}
+    >
+      <View>
+        <Title>
+          {title}
+        </Title>
+        <Text style={{fontSize: 16, color: gray}}>
+          {questions.length} Cards
+        </Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
@@ -53,7 +49,12 @@ class ListDecks extends Component {
 const styles = StyleSheet.create({
   deckItem: {
     flexDirection: 'row',
-    marginTop: 12
+    margin: 12,
+    padding:20,
+    backgroundColor: white,
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: slategray,
   },
 })
 

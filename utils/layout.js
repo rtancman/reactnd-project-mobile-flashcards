@@ -3,12 +3,12 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch } from 'reac
 import { TextField } from 'react-native-material-textfield';
 import { slategray, white, silver, redBlood, green } from './colors'
 
-export const PressBtn = ({ onPress, label = 'SUBMIT' }) => {
+export const PressBtn = ({ onPress, label = 'SUBMIT', icon = '' }) => {
   return (
     <TouchableOpacity
       style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn]}
       onPress={onPress}>
-        <Text style={styles.PressBtnText}>{label}</Text>
+        <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
   )
 }
@@ -57,9 +57,14 @@ export const CustomTextField = ({ onChange, label='label', value='', error='' })
   )
 }
 
-export const Title = ({ children = 'Title' }) => {
+export const Title = ({ customStyle = {}, children = 'Title' }) => {
   return (
-    <Text style={styles.Title}>{children}</Text>
+    <Text style={[styles.Title, customStyle]}>{children}</Text>
+  )
+}
+export const SubTitle = ({ customStyle = {}, children = 'SubTitle' }) => {
+  return (
+    <Text style={[styles.Title, styles.SubTitle, customStyle]}>{children}</Text>
   )
 }
 
@@ -148,6 +153,11 @@ const styles = StyleSheet.create({
   Title: {
     color: slategray,
     fontSize: 28,
+    marginBottom: 20,
+  },
+  SubTitle: {
+    color: slategray,
+    fontSize: 18,
   },
   Text: {
     color: slategray,
