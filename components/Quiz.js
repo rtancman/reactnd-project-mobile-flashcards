@@ -21,21 +21,17 @@ class Quiz extends Component {
     score: 0,
   }
 
-  answerScore(choice, card) {
-    if (choice === card.correct) {
-      return 1
-    }
-    return 0
-  }
-
   choiceAnswer(answer, card) {
     const { deck } = this.props
     const { step } = this.state
 
     if ( (step+1) >= deck.questions.length ) {
       clearLocalNotification()
-      this.setState({
-        showEndScreen: true
+      this.setState((state) => {
+        return {
+          showEndScreen: true,
+          score: state.score + (answer === card.correct ? 1 : 0),
+        }
       })
     } else {
       this.setState((state) => {
@@ -43,7 +39,7 @@ class Quiz extends Component {
           step: state.step + 1,
           showAnswer: false,
           listAnswers: [ ...state.listAnswers, answer ],
-          score: state.score + (answer === card.correct? 1 : 0),
+          score: state.score + (answer === card.correct ? 1 : 0),
         }
       })
     }
