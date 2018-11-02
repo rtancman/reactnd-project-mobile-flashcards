@@ -16,21 +16,23 @@ class DeckDetail extends Component {
   render() {
     const { navigation, deck } = this.props
     const { deckId } = navigation.state.params
-
+    const questionLength = deck.questions.length
     return (
       <View style={[Grid.container]}>
         <Title>{deck.title}</Title>
-        <SubTitle>{deck.questions.length} Cards</SubTitle>
+        <SubTitle>{questionLength} Cards</SubTitle>
         <PressBtn 
           onPress={() => navigation.navigate('AddCard', { title: deck.title, deckId } )} 
           label='ADD CARD'
           icon={Platform.OS === 'ios' ? <Ionicons name='ios-square-outline' size={20} color={white} /> : <MaterialCommunityIcons name='cards-outline' size={20} color={white} /> }
         />
-        <PressBtn 
-          onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} 
-          label='START QUIZ' 
-          icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
-        />
+        {questionLength > 0 && (
+          <PressBtn 
+            onPress={() => navigation.navigate('Quiz', { title: deck.title, deckId } )} 
+            label='START QUIZ' 
+            icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
+          />
+        )}
       </View>
     );
   }
