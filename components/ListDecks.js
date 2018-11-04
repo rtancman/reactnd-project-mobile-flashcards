@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator, Platform } from 'react-native'
 import { NavigationActions } from 'react-navigation'
-import { theme, Title, SubTitle, LinkBtn } from '../utils/layout'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
+import { theme, Title, SubTitle, LinkBtn, Grid, InvertBtn } from '../utils/layout'
 import { decksFetchData } from '../actions'
-import { gray, slategray } from '../utils/colors'
+import { gray, slategray, white } from '../utils/colors'
 
 const DeckRender = ({id, title, questions, navigation}) => {
   return (
@@ -36,6 +37,20 @@ class ListDecks extends Component {
         this.setState({ loading: false})
       })
   }
+  
+  screenTitle(navigation) {
+    return (
+      <View style={[Grid.row, styles.ScreenTitle]}>
+        <Text style={{fontSize: 22, color: white, marginBottom: 0, flex: 1}}>Decks</Text>
+        <InvertBtn
+          customStyle={{marginBottom: 0, flex: 1, height: 'auto', padding: 5}}
+          onPress={() => navigation.navigate('AddDeck', { title: 'New Deck' })} 
+          label='New Deck' 
+          icon={Platform.OS === 'ios' ? <Ionicons name='ios-square-outline' size={20} color={slategray} /> : <MaterialCommunityIcons name='cards-outline' size={20} color={slategray} /> }
+        />
+      </View>
+    )
+  }
 
   render() {
     const { loading } = this.state
@@ -49,12 +64,13 @@ class ListDecks extends Component {
     if (Object.keys(decks).length === 0) {
       return (
         <View style={{flex:1}}>
+          { this.screenTitle(navigation) }
           <View style={[theme.Box]}>
             <SubTitle customStyle={styles.TextCenter}>You don't have decks 🙄</SubTitle>
             <LinkBtn 
               customStyle={styles.TextCenter} 
               label='Create your deck!' 
-              onPress={() => this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'AddDeck' }))} 
+              onPress={() => navigation.navigate('AddDeck', { title: 'New Deck' })} 
             />
           </View>
         </View>
@@ -63,6 +79,7 @@ class ListDecks extends Component {
 
     return (
       <View style={{flex: 1}}>
+        { this.screenTitle(navigation) }
         <FlatList 
           data={Object.values(decks).map(o => ({...o, key: o.id}))} 
           renderItem={({item}) => {
@@ -77,6 +94,11 @@ class ListDecks extends Component {
 const styles = StyleSheet.create({
   TextCenter: {
     textAlign: 'center',
+  },
+  ScreenTitle: {
+    backgroundColor: slategray,
+    padding: 12,
+    marginBottom: 20,
   },
 })
 

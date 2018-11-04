@@ -1,8 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { View, Platform, StatusBar } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
+import { View, StatusBar } from 'react-native'
+import { createStackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import configureStore from './store'
 import { slategray, silver, snow } from './utils/colors'
@@ -21,35 +20,6 @@ function MobileFlashcardsBar ({backgroundColor, ...props}) {
   )
 }
 
-const Tabs = createBottomTabNavigator({
-  Home: {
-    screen: ListDecks,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor }) => <Ionicons name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'} size={30} color={tintColor} />
-    },
-  },
-  AddDeck: {
-    screen: AddDeck,
-    navigationOptions: {
-      tabBarLabel: 'Add Deck',
-      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={30} color={tintColor} />
-    },
-  }
-}, {
-  navigationOptions: {
-    header: null
-  },
-  tabBarOptions: {
-    activeTintColor: slategray,
-    inactiveTintColor: silver,
-    style: {
-      height: 56,
-      backgroundColor: snow
-    }
-  }
-})
-
 const navigationOptions = {
   headerTintColor: slategray,
   headerStyle: {
@@ -59,13 +29,17 @@ const navigationOptions = {
 
 const MainNavigator = createStackNavigator({
   Home: {
-    screen: Tabs,
+    screen: ListDecks,
     navigationOptions: {
       header: null,
     },
   },
   AddCard: {
     screen: AddCard,
+    navigationOptions
+  },
+  AddDeck: {
+    screen: AddDeck,
     navigationOptions
   },
   DeckDetail: {

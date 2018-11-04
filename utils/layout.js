@@ -3,30 +3,40 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch } from 'reac
 import { TextField } from 'react-native-material-textfield';
 import { slategray, white, silver, redBlood, green } from './colors'
 
-export const PressBtn = ({ onPress, label = 'SUBMIT', icon = '' }) => {
+export const PressBtn = ({ customStyle = {}, onPress, label = 'SUBMIT', icon = '' }) => {
   return (
     <TouchableOpacity
-      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn]}
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, customStyle]}
       onPress={onPress}>
         <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
   )
 }
 
-export const SuccessBtn = ({ onPress, label = 'SUCCESS', icon = '' }) => {
+export const InvertBtn = ({ customStyle = {}, onPress, label = 'SUBMIT', icon = '' }) => {
   return (
     <TouchableOpacity
-      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.successBtn]}
+      style={[styles.invertBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, customStyle]}
+      onPress={onPress}>
+        <Text style={[styles.PressBtnText, {color: slategray}]}>{icon} {label}</Text>
+    </TouchableOpacity>
+  )
+}
+
+export const SuccessBtn = ({ customStyle = {}, onPress, label = 'SUCCESS', icon = '' }) => {
+  return (
+    <TouchableOpacity
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.successBtn, customStyle]}
       onPress={onPress}>
         <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
   )
 }
 
-export const DangerBtn = ({ onPress, label = 'DANGER', icon = '' }) => {
+export const DangerBtn = ({ customStyle = {}, onPress, label = 'DANGER', icon = '' }) => {
   return (
     <TouchableOpacity
-      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.dangerBtn]}
+      style={[styles.pressBtn, Platform.OS === 'ios' ? styles.iosPressBtn : styles.AndroidPressBtn, styles.dangerBtn, customStyle]}
       onPress={onPress}>
         <Text style={styles.PressBtnText}>{icon} {label}</Text>
     </TouchableOpacity>
@@ -99,6 +109,15 @@ export const CustomSwitch = ({label, value, onChange}) => {
   )
 }
 
+export const ScreenTitle = ({title = ''}) => {
+  return (
+    <View style={[Grid.row, styles.ScreenTitle]}>
+      <Title customStyle={{color: white, marginBottom: 0}}>{title}</Title>
+    </View>
+  )
+}
+
+
 export const Grid = StyleSheet.create({
   container: {
     flex: 1,
@@ -120,6 +139,9 @@ const styles = StyleSheet.create({
   successBtn: {
     backgroundColor: green,
   },
+  invertBtn: {
+    backgroundColor: white,
+  },
   dangerBtn: {
     backgroundColor: redBlood,
   },
@@ -133,7 +155,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     height: 45,
-    borderRadius: 2,
+    borderRadius: 15,
   },
   PressBtnText: {
     color: white,
@@ -181,6 +203,12 @@ const styles = StyleSheet.create({
   },
   TextRight: {
     textAlign: 'right',
+  },
+  ScreenTitle: {
+    backgroundColor: slategray,
+    padding: 12,
+    marginBottom: 20,
+    justifyContent: 'center'
   },
 })
 

@@ -6,6 +6,13 @@ import { PressBtn, Grid, Title, CustomTextField } from '../utils/layout'
 import { saveDeckTitleFetch } from '../actions'
 
 class AddDeck extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { title } = navigation.state.params
+    return {
+      title: title
+    }
+  }
+
   state = {
     title: '',
     errorTitle: '',
@@ -29,7 +36,7 @@ class AddDeck extends Component {
 
     return (
       <View style={Grid.container}>
-        <Title>Add New Deck</Title>
+        <Title>Deck</Title>
         <CustomTextField
           label='Title'
           value={title}
