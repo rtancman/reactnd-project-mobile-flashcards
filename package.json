@@ -10,7 +10,13 @@
     "test": "node_modules/.bin/jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "testMatch": [
+      "**/?(*.)test.js?(x)"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|react-navigation|expo)/"
+    ]
   },
   "dependencies": {
     "expo": "^31.0.2",
@@ -25,6 +31,9 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
-    "jest-expo": "^31.0.0"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest-expo": "^31.0.0",
+    "react-dom": "16"
   }
 }
