@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
 import { clearLocalNotification } from '../utils/helpers'
-import { green, white } from '../utils/colors'
+import { green, white, slategray } from '../utils/colors'
+import { addDeckQuizScoreFetch } from '../actions'
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -19,20 +20,28 @@ class Quiz extends Component {
     listAnswers: [],
     showEndScreen: false,
     score: 0,
+    loading: false,
   }
 
   choiceAnswer(answer, card) {
     const { deck } = this.props
-    const { step } = this.state
+    const { step, score } = this.state
 
     if ( (step+1) >= deck.questions.length ) {
+      const currentScore = score + (answer === card.correct ? 1 : 0)
+      
       clearLocalNotification()
-      this.setState((state) => {
-        return {
-          showEndScreen: true,
-          score: state.score + (answer === card.correct ? 1 : 0),
-        }
-      })
+      this.setState({ loading: true})
+      this.props.dispatch(addDeckQuizScoreFetch(deck.id, currentScore))
+        .then((data) => {
+          this.setState((state) => {
+            return {
+              loading: false,
+              showEndScreen: true,
+              score: currentScore,
+            }
+          })
+        })
     } else {
       this.setState((state) => {
         return {
@@ -46,8 +55,12 @@ class Quiz extends Component {
   }
 
   render() {
-    const { step, showAnswer, showEndScreen, score } = this.state
+    const { step, showAnswer, showEndScreen, score, loading } = this.state
     const { deck } = this.props
+
+    if ( loading ){
+      return <ActivityIndicator size="large" color={slategray} />
+    }
 
     if ( showEndScreen ) {
       return (

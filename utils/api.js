@@ -111,3 +111,15 @@ export const getScores = () => {
       : JSON.parse(results)
     })
 }
+
+export const getDecksAndScores = async () => {
+  const decks = await getDecks()
+  const scores = await getScores()
+
+  return new Promise(function(resolve) {
+    resolve({
+      decks,
+      scores,
+    })
+  })
+}

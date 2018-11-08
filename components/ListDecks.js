@@ -4,10 +4,10 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator, 
 import { NavigationActions } from 'react-navigation'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { theme, Title, SubTitle, LinkBtn, Grid, InvertBtn } from '../utils/layout'
-import { decksFetchData } from '../actions'
+import { decksFetchData, decksAndScoresfechData } from '../actions'
 import { gray, slategray, white } from '../utils/colors'
 
-const DeckRender = ({id, title, questions, navigation}) => {
+const DeckRender = ({id, title, questions, navigation, maxScore}) => {
   return (
     <TouchableOpacity style={[theme.Box]}
       onPress={() => navigation.navigate(
@@ -15,12 +15,17 @@ const DeckRender = ({id, title, questions, navigation}) => {
       )}
     >
       <View>
-        <Title>
-          {title}
-        </Title>
-        <Text style={{fontSize: 16, color: gray}}>
-          {questions.length} Cards
-        </Text>
+        <Title style={{flex: 1}}>{title}</Title>
+        <View style={[Grid.row, {flex: 1, justifyContent: 'space-between'}]}>
+          <Text style={{fontSize: 16, color: gray}}>
+            {questions.length} Cards
+          </Text>
+          {maxScore > 0 && (
+            <Text style={{fontSize: 16, color: gray}}>
+              Max Score: {maxScore}
+            </Text>
+          )}
+        </View>
       </View>
     </TouchableOpacity>
   )
@@ -32,7 +37,7 @@ class ListDecks extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(decksFetchData())
+    this.props.dispatch(decksAndScoresfechData())
       .then((data) => {
         this.setState({ loading: false})
       })
@@ -50,6 +55,13 @@ class ListDecks extends Component {
         />
       </View>
     )
+  }
+
+  getMaxScoreByDeckId(deckId) {
+    const { quiz } = this.props
+    const scores = deckId in quiz? quiz[deckId] : []
+  
+    return scores.length < 1? 0 : Math.max(...scores)
   }
 
   render() {
@@ -83,7 +95,8 @@ class ListDecks extends Component {
         <FlatList 
           data={Object.values(decks).map(o => ({...o, key: o.id}))} 
           renderItem={({item}) => {
-            return <DeckRender {...item} navigation={navigation} />
+            const maxScore = this.getMaxScoreByDeckId(item.id)
+            return <DeckRender {...item} maxScore={maxScore} navigation={navigation} />
           }}
         />
       </View>
@@ -102,9 +115,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = ({decks}) => { 
+const mapStateToProps = ({decks, quiz}) => { 
   return {
-    decks
+    decks,
+    quiz
   } 
 }
 

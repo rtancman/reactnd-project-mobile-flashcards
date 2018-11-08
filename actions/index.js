@@ -1,4 +1,4 @@
-import { getDecks, saveDeckTitle, addCardToDeck, removeDeckById } from '../utils/api'
+import { getDecks, saveDeckTitle, addCardToDeck, removeDeckById, getDecksAndScores, addQuizScoreByDeckId } from '../utils/api'
 import uuidv4 from 'uuid/v4'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
@@ -119,5 +119,24 @@ export function scoresFetchData() {
   return dispatch => {
     return getScores()
       .then(scores => dispatch(receiveScores(scores)))
+  }
+}
+
+export function decksAndScoresfechData() {
+  return dispatch => {
+    return getDecksAndScores()
+      .then(data => {
+        dispatch(receiveScores(data.scores))
+        dispatch(receiveDecks(data.decks))
+      })
+  }
+}
+
+export function addDeckQuizScoreFetch(deckId, score) {
+  return dispatch => {
+    return addQuizScoreByDeckId(deckId, score)
+      .then(data => {
+        dispatch(addQuizScore(deckId, score))
+      })
   }
 }
