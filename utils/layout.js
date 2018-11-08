@@ -109,10 +109,10 @@ export const CustomSwitch = ({label, value, onChange}) => {
   )
 }
 
-export const ScreenTitle = ({title = ''}) => {
+export const ScreenTitle = ({title = '', icon=''}) => {
   return (
     <View style={[Grid.row, styles.ScreenTitle]}>
-      <Title customStyle={{color: white, marginBottom: 0}}>{title}</Title>
+      <Title customStyle={{color: white, marginBottom: 0}}>{icon} {title}</Title>
     </View>
   )
 }

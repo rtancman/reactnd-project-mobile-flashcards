@@ -46,7 +46,7 @@ class DeckDetail extends Component {
       return <ActivityIndicator size="large" color={slategray} />
     }
 
-    const { navigation, deck } = this.props
+    const { navigation, deck, scores } = this.props
     const { deckId } = navigation.state.params
     const questionLength = deck.questions.length
     return (
@@ -65,6 +65,13 @@ class DeckDetail extends Component {
             icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
           />
         )}
+        {questionLength > 0 && scores.length >= 1 && (
+        <PressBtn 
+            onPress={() => navigation.navigate('QuizScore', { title: deck.title, deckId } )} 
+            label='QUIZ SCORES' 
+            icon={<Ionicons name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={20} color={white} />}
+          />
+        )}
         <DangerBtn 
           onPress={() => this.removeAction() } 
           label='REMOVE DECK'
@@ -75,10 +82,11 @@ class DeckDetail extends Component {
   }
 }
 
-const mapStateToProps = ({decks}, {navigation}) => {
+const mapStateToProps = ({decks, quiz}, {navigation}) => {
   const { deckId } = navigation.state.params
   return {
     deck: decks[deckId],
+    scores: deckId in quiz? quiz[deckId] : [],
   } 
 }
 

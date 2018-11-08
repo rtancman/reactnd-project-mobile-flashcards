@@ -11,6 +11,7 @@ import ListDecks from './components/ListDecks'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
+import QuizScore from './components/QuizScore'
 
 function MobileFlashcardsBar ({backgroundColor, ...props}) {
   return (
@@ -49,7 +50,11 @@ const MainNavigator = createStackNavigator({
   Quiz: {
     screen: Quiz,
     navigationOptions
-  }
+  },
+  QuizScore: {
+    screen: QuizScore,
+    navigationOptions
+  },
 })
 
 const store = configureStore()
