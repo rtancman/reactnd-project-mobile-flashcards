@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Platform, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { Ionicons } from '@expo/vector-icons'
-import { SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { PressBtn, SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
 import { clearLocalNotification } from '../utils/helpers'
 import { green, white, slategray } from '../utils/colors'
 import { addDeckQuizScoreFetch } from '../actions'
@@ -21,6 +21,17 @@ class Quiz extends Component {
     showEndScreen: false,
     score: 0,
     loading: false,
+  }
+
+  resetQuiz() {
+    this.setState({
+      step: 0,
+      showAnswer: false,
+      listAnswers: [],
+      showEndScreen: false,
+      score: 0,
+      loading: false,
+    })
   }
 
   choiceAnswer(answer, card) {
@@ -56,7 +67,7 @@ class Quiz extends Component {
 
   render() {
     const { step, showAnswer, showEndScreen, score, loading } = this.state
-    const { deck } = this.props
+    const { deck, navigation } = this.props
 
     if ( loading ){
       return <ActivityIndicator size="large" color={slategray} />
@@ -70,6 +81,11 @@ class Quiz extends Component {
             <Ionicons style={styles.TextCenter} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={60} color={green} />
             <Title customStyle={styles.TextCenter}>Congratulations!</Title>
             <SubTitle customStyle={styles.TextCenter}>Your score is {score}</SubTitle>
+            <PressBtn 
+              onPress={() => this.resetQuiz()} 
+              label='RESTART QUIZ' 
+              icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
+            />
           </View>
         </View>
       ) 

@@ -10,7 +10,7 @@ import { gray, white, ghostwhite, slategray } from '../utils/colors'
 const QuizScoreRender = ({position, score}) => {
   const lineColor = position%2 === 0? ghostwhite : white
   return (
-    <View style={[Grid.container, styles.Table, {backgroundColor: lineColor}]}>
+    <View style={[Grid.container, styles.Table, {backgroundColor: lineColor, margin: 0}]}>
       <View style={[Grid.row, styles.TableLine]}>
         <Text style={{fontSize: 16, color: slategray}}>{position}.</Text>
         <Text style={{fontSize: 20, color: slategray}}>{score} {score <= 1? 'point': 'points'}</Text>
@@ -49,10 +49,11 @@ class QuizScore extends Component {
     return (
       <View style={{flex: 1}}>
         <ScreenTitle 
-          title='Your scores' 
+          title='Your scores'
+          customStyle={{marginBottom: 0}}
           icon={<Ionicons name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={20} color={white} />} 
         />
-        <FlatList 
+        <FlatList
           data={scores.map((value, index) => ({score: value, position: (index + 1), key: uuidv4()}))} 
           renderItem={({item}) => {
             return <QuizScoreRender {...item} />
