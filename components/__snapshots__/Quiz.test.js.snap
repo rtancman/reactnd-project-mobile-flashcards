@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quiz Component without crashing 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        Object {
+          "backgroundColor": "#708090",
+          "marginBottom": 20,
+          "padding": 12,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      0
+      /
+      1
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "textAlign": "right",
+          },
+        ]
+      }
+    >
+      0%
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "borderRadius": 10,
+        "margin": 12,
+        "padding": 20,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#708090",
+            "fontSize": 28,
+            "marginBottom": 20,
+          },
+          Object {
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      What is capital of united states?
+    </Text>
+    <View
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#007bff",
+              "fontSize": 14,
+              "textDecorationLine": "underline",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Answer
+      </Text>
+    </View>
+  </View>
+</View>
+`;

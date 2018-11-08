@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddDeck Component without crashing 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+      "padding": 20,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#708090",
+          "fontSize": 28,
+          "marginBottom": 20,
+        },
+        Object {},
+      ]
+    }
+  >
+    Deck
+  </Text>
+  <View
+    onResponderRelease={[Function]}
+    onStartShouldSetResponder={[Function]}
+    pointerEvents="auto"
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "borderBottomColor": "rgba(112, 128, 144, 1)",
+          "borderBottomWidth": 0.5,
+          "height": 64,
+          "paddingBottom": 8,
+          "paddingTop": 32,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "position": "absolute",
+            "top": 36,
+          }
+        }
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Object {
+              "color": "rgba(112, 128, 144, 1)",
+              "fontSize": 16,
+            }
+          }
+        >
+          Title
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          autoCapitalize="sentences"
+          autoCorrect={false}
+          disableFullscreenUI={true}
+          editable={true}
+          error=""
+          onBlur={[Function]}
+          onChange={[Function]}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          onFocus={[Function]}
+          selectionColor="#C0C0C0"
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "margin": 0,
+                "padding": 0,
+                "top": 2,
+              },
+              Object {
+                "color": "#708090",
+                "fontSize": 16,
+                "height": 24,
+                "textAlign": "left",
+              },
+              undefined,
+            ]
+          }
+          underlineColorAndroid="transparent"
+          value=""
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 8,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-start",
+              "bottom": 0,
+              "left": 0,
+              "paddingVertical": 4,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "color": "rgb(213, 0, 0)",
+                "fontSize": 0,
+                "opacity": 0,
+              }
+            }
+          >
+            
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "flex-start",
+              "bottom": 0,
+              "left": 0,
+              "paddingVertical": 4,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "color": "#708090",
+                "fontSize": 12,
+                "opacity": 1,
+              }
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#708090",
+        "borderRadius": 7,
+        "height": 45,
+        "marginBottom": 20,
+        "marginLeft": 40,
+        "marginRight": 40,
+        "opacity": 1,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 22,
+          "textAlign": "center",
+        }
+      }
+    >
+      
+       
+      SAVE
+    </Text>
+  </View>
+</View>
+`;

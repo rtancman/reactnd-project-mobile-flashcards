@@ -431,6 +431,8 @@ exports[`Layout Texts <ScreenTitle /> render without crashing 1`] = `
     }
   >
     
+     
+    
   </Text>
 </View>
 `;

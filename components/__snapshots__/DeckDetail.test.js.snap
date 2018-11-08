@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeckDetail Component without crashing 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+        "padding": 20,
+      },
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#708090",
+          "fontSize": 28,
+          "marginBottom": 20,
+        },
+        Object {},
+      ]
+    }
+  >
+    Mock Deck
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#708090",
+          "fontSize": 28,
+          "marginBottom": 20,
+        },
+        Object {
+          "color": "#708090",
+          "fontSize": 18,
+        },
+        Object {},
+      ]
+    }
+  >
+    1
+     Cards
+  </Text>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#708090",
+        "borderRadius": 7,
+        "height": 45,
+        "marginBottom": 20,
+        "marginLeft": 40,
+        "marginRight": 40,
+        "opacity": 1,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 22,
+          "textAlign": "center",
+        }
+      }
+    >
+      <Text />
+       
+      ADD CARD
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#708090",
+        "borderRadius": 7,
+        "height": 45,
+        "marginBottom": 20,
+        "marginLeft": 40,
+        "marginRight": 40,
+        "opacity": 1,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 22,
+          "textAlign": "center",
+        }
+      }
+    >
+      <Text />
+       
+      START QUIZ
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#bd2130",
+        "borderRadius": 7,
+        "height": 45,
+        "marginBottom": 20,
+        "marginLeft": 40,
+        "marginRight": 40,
+        "opacity": 1,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 22,
+          "textAlign": "center",
+        }
+      }
+    >
+      <Text />
+       
+      REMOVE DECK
+    </Text>
+  </View>
+</View>
+`;
