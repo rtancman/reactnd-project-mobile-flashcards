@@ -16,3 +16,7 @@ export const mockDeckWitoutQuestions =  {
   title: 'Mock Deck Witout Questions',
   questions: []
 }
+
+export const mockDeckScore =  {
+  'c16e5668-e2d0-11e8-b0fc-fcaa142a9210': [42, 100],
+}

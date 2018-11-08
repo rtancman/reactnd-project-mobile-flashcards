@@ -5,6 +5,8 @@ export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECKS = 'ADD_DECKS'
 export const ADD_CARD = 'ADD_CARD'
 export const REMOVE_DECK = 'REMOVE_DECK'
+export const ADD_QUIZ_SCORE = 'ADD_QUIZ_SCORE'
+export const RECEIVE_DECK_QUIZ_SCORES = 'RECEIVE_DECK_QUIZ_SCORES'
 
 const initialDecks =  {
   id: '',
@@ -38,6 +40,21 @@ export function removeDeck (deckId) {
   return {
     type: REMOVE_DECK,
     deckId,
+  }
+}
+
+export function addQuizScore (deckId, score) {
+  return {
+    type: ADD_QUIZ_SCORE,
+    deckId,
+    score
+  }
+}
+
+export function receiveScores (scores) {
+  return {
+    type: RECEIVE_DECK_QUIZ_SCORES,
+    scores
   }
 }
 
@@ -95,5 +112,12 @@ export function removeDeckFetch(deckId) {
           resolve(deckId);
         })
       })
+  }
+}
+
+export function scoresFetchData() {
+  return dispatch => {
+    return getScores()
+      .then(scores => dispatch(receiveScores(scores)))
   }
 }

@@ -1,6 +1,9 @@
 import { AsyncStorage as storage } from 'react-native'
 import MockAsyncStorage from 'mock-async-storage'
-import { getDeck, getDecks, saveDeckTitle, addCardToDeck, removeDeckById, clearAllDecks, FLASHCARDS_DECKS_KEY } from './api'
+import {
+  getDeck, getDecks, saveDeckTitle, addCardToDeck, removeDeckById, clearAllDecks, FLASHCARDS_DECKS_KEY, 
+  getQuizScoreByDeckId, addQuizScoreByDeckId, FLASHCARDS_SCORES_KEY, getScores
+} from './api'
 import { mockDeck, mockCard, mockDeckWitoutQuestions } from '../fixtures/mocks';
 
 describe('Api', () => {
@@ -193,6 +196,95 @@ describe('Api', () => {
         const decks = await getDecks()
 
         expect(Object.keys(decks).length).toEqual(0)
+      })
+    })
+  })
+
+  describe('Quiz Score by Deck', () => {
+    const scoreDeckId = '0b01c4ba-e360-11e8-a576-fcaa142a9210'
+    const scoreDeck = {
+      [scoreDeckId]: [1234, 4321]
+    }
+    const scoreDeckInStorage = JSON.stringify(scoreDeck)
+
+    describe('#getQuizScoreByDeckId', () => {
+      it('should return a empty object {} if not exists', async () => {
+        const scores = await getQuizScoreByDeckId('1234')
+
+        expect(scores).toEqual([])
+      })
+
+      it('should return a object deck', async () => {
+        await storage.setItem(FLASHCARDS_SCORES_KEY, scoreDeckInStorage)
+
+        const scores = await getQuizScoreByDeckId(scoreDeckId)
+
+        expect(scores).toEqual(scoreDeck[scoreDeckId])
+      })
+
+      it('with invalid keys AsyncStorage return a empty object {}', async () => {
+        await storage.removeItem(FLASHCARDS_SCORES_KEY)
+        const scores = await getQuizScoreByDeckId('1234')
+
+        expect(scores).toEqual([])
+      })
+
+
+      it('return a empty object {} if deckId does not exists', async () => {
+        await storage.setItem(FLASHCARDS_SCORES_KEY, scoreDeckInStorage)
+        const scores = await getQuizScoreByDeckId('1234')
+
+        expect(scores).toEqual([])
+      })
+    })
+
+    describe('#addQuizScoreByDeckId', () => {
+      describe('with data in Quiz Scores', () => {
+        it('save card object', async () => {
+          await storage.setItem(FLASHCARDS_SCORES_KEY, scoreDeckInStorage)
+          const newScore = 42
+          await addQuizScoreByDeckId(scoreDeckId, newScore)
+          const scores = await getQuizScoreByDeckId(scoreDeckId)
+
+          expect(scores.length).toEqual(3)
+          expect(scores[scores.length-1]).toEqual(newScore)
+        })
+      })
+  
+      describe('with empty Quiz Scores', () => {
+        it('save card object', async () => {
+          await storage.clear()
+          const newScore = 42
+          await addQuizScoreByDeckId(scoreDeckId, newScore)
+          const scores = await getQuizScoreByDeckId(scoreDeckId)
+
+          expect(scores.length).toEqual(1)
+          expect(scores[scores.length-1]).toEqual(newScore)
+        })
+      })
+    })
+
+    describe('#getScores', () => {
+      it('should return a empty object {} if not exists', async () => {
+        await storage.clear()
+        const scores = await getScores()
+
+        expect(scores).toEqual({})
+      })
+
+      it('should return a object deck', async () => {
+        await storage.setItem(FLASHCARDS_SCORES_KEY, scoreDeckInStorage)
+
+        const scores = await getScores()
+
+        expect(scores).toEqual(scoreDeck)
+      })
+
+      it('with invalid keys AsyncStorage return a empty object {}', async () => {
+        await storage.removeItem(FLASHCARDS_SCORES_KEY)
+        const scores = await getScores()
+
+        expect(scores).toEqual({})
       })
     })
   })

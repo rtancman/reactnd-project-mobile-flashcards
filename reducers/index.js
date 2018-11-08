@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_DECKS, ADD_DECKS, ADD_CARD, REMOVE_DECK } from '../actions'
+import { RECEIVE_DECKS, ADD_DECKS, ADD_CARD, REMOVE_DECK, ADD_QUIZ_SCORE, RECEIVE_DECK_QUIZ_SCORES } from '../actions'
 
 
 const decks = (state = {}, action) => {
@@ -37,6 +37,27 @@ const decks = (state = {}, action) => {
   }
 }
 
+const quiz = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_QUIZ_SCORE:
+      return {
+        ...state,
+        [action.deckId]: [
+          ...(action.deckId in state? state[action.deckId] : []),
+          action.score,
+        ]
+      }
+    case RECEIVE_DECK_QUIZ_SCORES:
+      return {
+        ...state,
+        ...action.scores,
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   decks,
+  quiz,
 })
