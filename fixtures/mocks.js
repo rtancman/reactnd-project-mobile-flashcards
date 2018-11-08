@@ -10,3 +10,9 @@ export const mockDeck =  {
   title: 'Mock Deck',
   questions: [mockCard]
 }
+
+export const mockDeckWitoutQuestions =  {
+  id: 'c16e5668-e2d0-11e8-b0fc-fcaa142a9210',
+  title: 'Mock Deck Witout Questions',
+  questions: []
+}

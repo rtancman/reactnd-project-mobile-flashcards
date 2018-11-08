@@ -61,7 +61,7 @@ class ListDecks extends Component {
 
     const { decks, navigation } = this.props
 
-    if (Object.keys(decks).length === 0) {
+    if (Object.keys(decks).length === 0 && decks.constructor === Object) {
       return (
         <View style={{flex:1}}>
           { this.screenTitle(navigation) }
