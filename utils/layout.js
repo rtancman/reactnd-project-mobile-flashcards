@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Switch, ActivityIndicator } from 'react-native'
 import { TextField } from 'react-native-material-textfield';
 import { slategray, white, silver, redBlood, green } from './colors'
 
@@ -117,6 +117,9 @@ export const ScreenTitle = ({title = '', icon='', customStyle = {}}) => {
   )
 }
 
+export const ScreenLoading = () => {
+  return <ActivityIndicator size="large" color={slategray} />
+}
 
 export const Grid = StyleSheet.create({
   container: {

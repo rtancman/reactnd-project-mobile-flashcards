@@ -1,11 +1,50 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Platform, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { PressBtn, SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
+import { PressBtn, SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle, ScreenLoading } from '../utils/layout'
 import { rescheduleLocalNotification } from '../utils/helpers'
 import { green, white, slategray } from '../utils/colors'
 import { addDeckQuizScoreFetch } from '../actions'
+
+
+const QuizEndScreen = ({deck, score, step, resetQuiz}) => {
+  return (
+    <View style={{flex:1}}>
+      <StepProgress step={step+1} total={deck.questions.length} />
+      <View style={[theme.Box]}>
+        <Ionicons style={styles.TextCenter} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={60} color={green} />
+        <Title customStyle={styles.TextCenter}>Congratulations!</Title>
+        <SubTitle customStyle={styles.TextCenter}>Your score is {score}</SubTitle>
+        <PressBtn 
+          onPress={() => resetQuiz()} 
+          label='RESTART QUIZ' 
+          icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
+        />
+      </View>
+    </View>
+  )
+}
+
+const QuizAnswer = ({card, isAnswer, onPressShowAnswer, onPressChoiceAnswer}) => {
+    if( !isAnswer ) return <LinkBtn customStyle={styles.TextCenter} label='Answer' onPress={() => onPressShowAnswer()} />
+
+    return (
+      <View>
+        <SubTitle customStyle={styles.TextCenter}>{card.answer}</SubTitle>
+        <SuccessBtn 
+          label='Correct'
+          onPress={() => onPressChoiceAnswer(true, card)}
+          icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} size={20} color={white} /> }
+        />
+        <DangerBtn 
+          label='Incorrect'
+          onPress={() => onPressChoiceAnswer(false, card)}
+          icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} size={20} color={white} /> }
+        />
+      </View>
+    )
+}
 
 class Quiz extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -67,57 +106,25 @@ class Quiz extends Component {
 
   render() {
     const { step, showAnswer, showEndScreen, score, loading } = this.state
-    const { deck, navigation } = this.props
+    const { deck } = this.props
 
-    if ( loading ){
-      return <ActivityIndicator size="large" color={slategray} />
-    }
+    if ( loading ) return <ScreenLoading />
 
-    if ( showEndScreen ) {
-      return (
-        <View style={{flex:1}}>
-          <StepProgress step={step+1} total={deck.questions.length} />
-          <View style={[theme.Box]}>
-            <Ionicons style={styles.TextCenter} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'} size={60} color={green} />
-            <Title customStyle={styles.TextCenter}>Congratulations!</Title>
-            <SubTitle customStyle={styles.TextCenter}>Your score is {score}</SubTitle>
-            <PressBtn 
-              onPress={() => this.resetQuiz()} 
-              label='RESTART QUIZ' 
-              icon={Platform.OS === 'ios' ? <Ionicons name='ios-text' size={20} color={white} /> : <MaterialIcons name='question-answer' size={20} color={white} /> }
-            />
-          </View>
-        </View>
-      ) 
-    }
+    if ( showEndScreen ) return <QuizEndScreen deck={deck} score={score} step={step} resetQuiz={() => this.resetQuiz()}/>
 
     const card = deck.questions[step]
-    let answerContent = <LinkBtn customStyle={styles.TextCenter} label='Answer' onPress={() => this.setState({showAnswer: true})} />
-
-    if( showAnswer ) {
-      answerContent = (
-        <View>
-          <SubTitle customStyle={styles.TextCenter}>{card.answer}</SubTitle>
-          <SuccessBtn 
-            label='Correct'
-            onPress={() => this.choiceAnswer(true, card)}
-            icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} size={20} color={white} /> }
-          />
-          <DangerBtn 
-            label='Incorrect'
-            onPress={() => this.choiceAnswer(false, card)}
-            icon={ <Ionicons name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} size={20} color={white} /> }
-          />
-        </View>
-      )
-    } 
 
     return (
       <View style={{flex:1}}>
         <StepProgress step={step} total={deck.questions.length} />
         <View style={theme.Box}>
           <Title customStyle={styles.TextCenter}>{card.question}</Title>
-          { answerContent }
+          <QuizAnswer 
+            card={card} 
+            isAnswer={showAnswer}
+            onPressShowAnswer={() => this.setState({showAnswer: true})}
+            onPressChoiceAnswer={(option, currentCard) => this.choiceAnswer(option, currentCard)}
+          />
         </View>
       </View>
     )

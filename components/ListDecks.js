@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator, Platform } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Platform } from 'react-native'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
-import { theme, Title, SubTitle, LinkBtn, Grid, InvertBtn } from '../utils/layout'
-import { decksFetchData, decksAndScoresfechData } from '../actions'
+import { theme, Title, SubTitle, LinkBtn, Grid, InvertBtn, ScreenLoading } from '../utils/layout'
+import { decksAndScoresfechData } from '../actions'
 import { gray, slategray, white } from '../utils/colors'
 
 const DeckRender = ({id, title, questions, navigation, maxScore}) => {
@@ -67,9 +66,7 @@ class ListDecks extends Component {
   render() {
     const { loading } = this.state
 
-    if ( loading ){
-      return <ActivityIndicator size="large" color={slategray} />
-    }
+    if ( loading ) return <ScreenLoading />
 
     const { decks, navigation } = this.props
 
