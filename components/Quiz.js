@@ -3,7 +3,7 @@ import { View, StyleSheet, Platform, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { PressBtn, SuccessBtn, DangerBtn, Title, StepProgress, LinkBtn, theme, SubTitle } from '../utils/layout'
-import { clearLocalNotification } from '../utils/helpers'
+import { rescheduleLocalNotification } from '../utils/helpers'
 import { green, white, slategray } from '../utils/colors'
 import { addDeckQuizScoreFetch } from '../actions'
 
@@ -41,7 +41,7 @@ class Quiz extends Component {
     if ( (step+1) >= deck.questions.length ) {
       const currentScore = score + (answer === card.correct ? 1 : 0)
       
-      clearLocalNotification()
+      rescheduleLocalNotification()
       this.setState({ loading: true})
       this.props.dispatch(addDeckQuizScoreFetch(deck.id, currentScore))
         .then((data) => {

@@ -20,6 +20,11 @@ const createNotification  = () => {
   }
 }
 
+export const rescheduleLocalNotification = async () => {
+  await clearLocalNotification()
+  return setLocalNotification()
+}
+
 export const clearLocalNotification = () => {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
