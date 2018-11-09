@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
 import { PressBtn, Grid, Title, CustomTextField } from '../utils/layout'
 import { saveDeckTitleFetch } from '../actions'
 
@@ -26,7 +25,7 @@ class AddDeck extends Component {
       this.props.dispatch(saveDeckTitleFetch(title))
         .then((deck) => {
           this.setState({ title: '', errorTitle: ''})
-          this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Home' }))
+          this.props.navigation.navigate('DeckDetail', {deckId: deck.id, title})
         })
     }
   }

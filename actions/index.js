@@ -79,7 +79,7 @@ export function saveDeckTitleFetch(title) {
       .then(data => {
         dispatch(addDeck(newDeck))
         return new Promise(function(resolve) {
-          resolve(newDeck);
+          resolve(newDeck[id])
         })
       })
   }
